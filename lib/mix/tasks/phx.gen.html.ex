@@ -195,9 +195,12 @@ defmodule Mix.Tasks.Phx.Gen.Html do
         ~s"""
         <.input field={{f, #{inspect(key)}}} type="select" label="#{label(key)}">
           <:option>Choose a value</:option>
-          <%= for value <- Ecto.Enum.values(#{inspect(schema.module)}, #{inspect(key)}) do %>
-            <:option value={value}><%= value %></:option>
-          <% end %>
+          <:option
+            :for={opt <- Ecto.Enum.values(#{inspect(schema.module)}, #{inspect(key)})}
+            value={opt}
+          >
+            <%= opt %>
+          </:option>
         </.input>
         """
       {key, _}  ->
